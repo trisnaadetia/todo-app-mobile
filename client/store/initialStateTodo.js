@@ -1,15 +1,15 @@
 export const listTodo = [{
   id: 1,
   title: 'membuat aplikasi todo',
-  deadline: '2021/06/22',
+  deadline: '2021/06/20',
   category: 'Work',
-  status: 'uncompleted'
+  status: 'completed'
 },{
   id: 2,
   title: 'membuat aplikasi kanban',
-  deadline: '2021/06/25',
+  deadline: '2021/05/25',
   category: 'Work',
-  status: 'uncompleted'
+  status: 'completed'
 },{
   id: 3,
   title: 'belajar ruby on rails',
@@ -19,9 +19,9 @@ export const listTodo = [{
 },{
   id: 4,
   title: 'belajar framework react',
-  deadline: '2021/06/26',
+  deadline: '2021/06/03',
   category: 'Study',
-  status: 'uncompleted'
+  status: 'completed'
 },{
   id: 5,
   title: 'menonton live coldplay',

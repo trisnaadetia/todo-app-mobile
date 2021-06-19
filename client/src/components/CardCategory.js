@@ -1,20 +1,32 @@
 import React from 'react'
 import { 
   StyleSheet, 
-  View
+  View,
+  TouchableOpacity
 } from 'react-native'
 import { 
   Icon,
   Text,
 } from '@ui-kitten/components'
+import { useSelector } from 'react-redux'
 
-export default function CardCategory({category}) {
+export default function CardCategory({category, navigation}) {
+  const todoWork = useSelector(state => state.todo.todoWork)
+  const todoMusic = useSelector(state => state.todo.todoMusic)
+  const todoTravel = useSelector(state => state.todo.todoTravel)
+  const todoStudy = useSelector(state => state.todo.todoStudy)
+  const todoHome = useSelector(state => state.todo.todoHome)
+  const todoShopping = useSelector(state => state.todo.todoShopping)
+  const todoSport = useSelector(state => state.todo.todoSport)
+
   return (
     <>
     {
       category.map(x => {
         return (
-          <View key={x.id} style={styles.card}>
+        <TouchableOpacity key={x.id} style={styles.card}
+          onPress={() => navigation.navigate('Detail', { name: `${x.name}` })}
+        >
           <Icon
             style={styles.icon}
             fill={x.fill}
@@ -31,10 +43,19 @@ export default function CardCategory({category}) {
               category="c1"
               style={{ fontSize: 15, color: 'gray' }}
             >
-              23 Tasks
+              {
+                x.name === 'Work' ? todoWork.length :
+                x.name === 'Travel' ? todoTravel.length :
+                x.name === 'Study' ? todoStudy.length :
+                x.name === 'Home' ? todoHome.length :
+                x.name === 'Shopping' ? todoShopping.length :
+                x.name === 'Sport' ? todoSport.length :
+                todoMusic.length
+
+              } Tasks
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
         )
       })
     }

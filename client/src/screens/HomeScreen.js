@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { 
   StyleSheet, 
   View,
@@ -12,13 +12,55 @@ import {
   Icon,
   Text,
 } from '@ui-kitten/components'
+import { 
+  setFilterTodoHome,
+  setFilterTodoMusic, 
+  setFilterTodoShopping, 
+  setFilterTodoSport, 
+  setFilterTodoStudy, 
+  setFilterTodoTravel, 
+  setFilterTodoWork 
+} from '../../store/action/actionTodo'
 import CardAll from '../components/CardAll'
 import CardCategory from '../components/CardCategory'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 export default function HomeScreen({ navigation }) {
+  const dispatch = useDispatch()
   const category = useSelector(state => state.category.category)
   const allTodo = useSelector(state => state.todo.allTodo)
+
+  useEffect(() => {
+    passingFilter()
+  },[allTodo])
+
+  const filterTodo = (category) => {
+    const newListTodo = [...allTodo]
+    const filter = newListTodo.filter(x => x.category === category)
+    if(category === 'Work') {
+      dispatch(setFilterTodoWork(filter))
+    } else if(category === 'Music') {
+      dispatch(setFilterTodoMusic(filter))
+    } else if(category === 'Travel') {
+      dispatch(setFilterTodoTravel(filter))
+    } else if(category === 'Study') {
+      dispatch(setFilterTodoStudy(filter))
+    } else if(category === 'Home') {
+      dispatch(setFilterTodoHome(filter))
+    } else if(category === 'Sport') {
+      dispatch(setFilterTodoSport(filter))
+    } else if(category === 'Shopping') {
+      dispatch(setFilterTodoShopping(filter))
+    }
+  }
+
+  const passingFilter = () => {
+    const newCategory = [...category]
+
+    newCategory.forEach(x => {
+      filterTodo(x.name)
+    })
+  }
 
   return (
     <>
@@ -37,7 +79,7 @@ export default function HomeScreen({ navigation }) {
           </Text>
           <View style={styles.containerCard}>
             <CardAll allTodo={allTodo} navigation={navigation}/>
-            <CardCategory category={category}/>
+            <CardCategory category={category} navigation={navigation}/>
           </View>
         </View>
       </ScrollView>

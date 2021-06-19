@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { 
   StyleSheet, 
   View,
@@ -32,9 +32,39 @@ const InfoIcon = (props) => (
 )
 
 
-export default function DetailScreen({ navigation }) {
+export default function DetailScreen({ navigation, route }) {
+  const { name } = route.params
   const [menuVisible, setMenuVisible] = useState(false)
+  const [iconName, setIconName] = useState('briefcase-outline')
+  const [filterTodo, setFilterTodo] = useState([])
+  const category = useSelector(state => state.category.category)
   const allTodo = useSelector(state => state.todo.allTodo)
+
+  useEffect(() => {
+    filterIcon()
+    passingFilter()
+    if(name === 'All') {
+      setFilterTodo(allTodo) 
+      setIconName('clipboard-outline')
+    }
+  },[name, allTodo])
+
+
+  const filterTodoByCategory = (category) => {
+    const newListTodo = [...allTodo]
+    const filter = newListTodo.filter(x => x.category === category)
+    filter && setFilterTodo(filter)
+  }
+
+  const passingFilter = () => {
+    const newCategory = [...category]
+
+    newCategory.forEach(x => {
+      if(name === x.name) {
+        filterTodoByCategory(x.name)
+      } 
+    })
+  }
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
@@ -63,6 +93,16 @@ export default function DetailScreen({ navigation }) {
     />
   )
 
+  const filterIcon = () => {
+    const newCategory = [...category]
+
+    newCategory.forEach(x => {
+      if(name === x.name) {
+        setIconName(x.code)
+      }
+    })
+  }
+
   return (
     <>
       <StatusBar
@@ -80,7 +120,7 @@ export default function DetailScreen({ navigation }) {
               <Icon
                 style={styles.icon}
                 fill='#5784fc'
-                name='clipboard-outline'
+                name={iconName}
               />
             </TouchableOpacity>
             <View style={{marginVertical: 20}}>
@@ -88,13 +128,13 @@ export default function DetailScreen({ navigation }) {
                 category="h4"
                 style={{ fontSize: 30, marginBottom: 3, color: 'white' }}
               >
-                All
+                {name}
               </Text>
               <Text
                 category="c1"
                 style={{ fontSize: 15, color: '#e5e5e5' }}
               >
-                {JSON.stringify(allTodo.length)} Tasks
+                {filterTodo.length} Tasks
               </Text>
             </View>
           </View>
@@ -106,7 +146,7 @@ export default function DetailScreen({ navigation }) {
               >
                 List of todos
               </Text>
-              <CardDetail allTodo={allTodo}/>
+              <CardDetail allTodo={filterTodo}/>
             </View>
           </ScrollView>
         </View>

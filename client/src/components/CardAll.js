@@ -12,7 +12,7 @@ import {
 export default function CardAll({allTodo, navigation}) {
   return (
     <TouchableOpacity style={styles.card}
-      onPress={() => navigation.navigate('Detail')}
+      onPress={() => navigation.navigate('Detail', { name: 'All' })}
     >
       <Icon
         style={styles.icon}
