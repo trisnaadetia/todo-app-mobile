@@ -8,6 +8,7 @@ import { EvaIconsPack } from '@ui-kitten/eva-icons'
 import { Provider } from 'react-redux'
 import store from './store/index'
 import HomeScreen from './src/screens/HomeScreen'
+import NewTaskScreen from './src/screens/NewTaskScreen'
 
 const Stack = createStackNavigator()
 
@@ -24,6 +25,7 @@ export default function App() {
               headerShown: false
             }}>
               <Stack.Screen name="Home" component={HomeScreen} />
+              <Stack.Screen name="NewTask" component={NewTaskScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ApplicationProvider>

@@ -11,7 +11,6 @@ import {
 import { 
   Icon,
   Text,
-  Button
 } from '@ui-kitten/components'
 
 export default function HomeScreen({ navigation }) {
@@ -55,7 +54,9 @@ export default function HomeScreen({ navigation }) {
           </View>
         </View>
       </ScrollView>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity style={styles.button}
+        onPress={() => navigation.navigate('NewTask')}
+      >
         <Icon
           style={{ width: 30, height: 30 }}
           fill='white'
