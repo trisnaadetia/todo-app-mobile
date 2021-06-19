@@ -12,7 +12,9 @@ import {
 import { 
   Icon,
   Text,
-  Button
+  Button,
+  Select,
+  SelectItem
 } from '@ui-kitten/components'
 import Textarea from 'react-native-textarea'
 import DateTimePicker from '@react-native-community/datetimepicker'
@@ -20,6 +22,7 @@ import { TextInput } from 'react-native-gesture-handler'
 
 export default function NewTaskScreen({ navigation }) {
   const [date, setDate] = useState(new Date())
+  const [selectedIndex, setSelectedIndex] = useState()
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date
@@ -91,10 +94,14 @@ export default function NewTaskScreen({ navigation }) {
                 fill='black'
                 name='pricetags-outline'
               />
-              <TextInput
+              <Select
+                style={{width: 320, marginHorizontal: 10}}
+                selectedIndex={selectedIndex}
                 placeholder="Category"
-                style={{fontSize: 20, marginHorizontal: 10}}
-              />
+                onSelect={index => setSelectedIndex(index)}
+              >
+                <SelectItem title='Work'/>
+              </Select>
             </View>
           </View>
         </View>
