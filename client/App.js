@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import store from './store/index'
 import HomeScreen from './src/screens/HomeScreen'
 import NewTaskScreen from './src/screens/NewTaskScreen'
+import DetailScreen from './src/screens/DetailScreen'
 
 const Stack = createStackNavigator()
 
@@ -26,6 +27,7 @@ export default function App() {
             }}>
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="NewTask" component={NewTaskScreen} />
+              <Stack.Screen name="Detail" component={DetailScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ApplicationProvider>

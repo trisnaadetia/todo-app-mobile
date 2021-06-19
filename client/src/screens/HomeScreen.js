@@ -46,7 +46,7 @@ export default function HomeScreen({ navigation }) {
               </Text>
               <Text
                 category="c1"
-                style={{ fontSize: 15 }}
+                style={{ fontSize: 15, color: 'gray' }}
               >
                 23 Tasks
               </Text>
