@@ -1,7 +1,12 @@
-import { createStore , applyMiddleware} from 'redux'
+import { createStore , applyMiddleware, combineReducers} from 'redux'
 import thunk from 'redux-thunk'
+import category from './reducer/categoryReducer'
+import todo from './reducer/todoReducer'
 
-import reducer from './reducer'
+const reducer = combineReducers({
+  category,
+  todo
+})
 
 function logger(store) {
   return function(next) {

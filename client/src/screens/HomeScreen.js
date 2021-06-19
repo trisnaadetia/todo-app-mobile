@@ -12,8 +12,14 @@ import {
   Icon,
   Text,
 } from '@ui-kitten/components'
+import CardAll from '../components/CardAll'
+import CardCategory from '../components/CardCategory'
+import { useSelector } from 'react-redux'
 
 export default function HomeScreen({ navigation }) {
+  const category = useSelector(state => state.category.category)
+  const allTodo = useSelector(state => state.todo.allTodo)
+
   return (
     <>
       <SafeAreaView style={{ flex: 0, backgroundColor: 'white' }}/>
@@ -29,28 +35,9 @@ export default function HomeScreen({ navigation }) {
           > 
             Lists
           </Text>
-        </View>
-        <View style={styles.containerCard}>
-          <View style={styles.card}>
-            <Icon
-              style={styles.icon}
-              fill='#4076d6'
-              name='clipboard-outline'
-            />
-            <View style={{ marginHorizontal: 5, marginVertical: 5 }}>
-              <Text
-                category="c1"
-                style={{ fontSize: 25, marginBottom: 3 }}
-              >
-                All
-              </Text>
-              <Text
-                category="c1"
-                style={{ fontSize: 15, color: 'gray' }}
-              >
-                23 Tasks
-              </Text>
-            </View>
+          <View style={styles.containerCard}>
+            <CardAll allTodo={allTodo} navigation={navigation}/>
+            <CardCategory category={category}/>
           </View>
         </View>
       </ScrollView>
@@ -83,24 +70,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap'
-  },
-  card: {
-    height:200,
-    width:"45%",
-    backgroundColor:"white",
-    borderRadius:5,
-    padding:10,
-    elevation:10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
-    marginHorizontal: 10,
-    marginVertical: 10,
-    padding: 15,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between'
   },
   button: {
     position: 'absolute', 

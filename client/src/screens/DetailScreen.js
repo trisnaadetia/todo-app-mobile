@@ -7,7 +7,6 @@ import {
   ScrollView,
   Platform,
   TouchableOpacity,
-  KeyboardAvoidingView,
 } from 'react-native'
 import { 
   Icon,
@@ -16,8 +15,9 @@ import {
   OverflowMenu, 
   TopNavigation, 
   TopNavigationAction,
-  CheckBox
 } from '@ui-kitten/components'
+import { useSelector } from 'react-redux'
+import CardDetail from '../components/CardDetail'
 
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' fill="white"/>
@@ -34,7 +34,7 @@ const InfoIcon = (props) => (
 
 export default function DetailScreen({ navigation }) {
   const [menuVisible, setMenuVisible] = useState(false)
-  const [checked, setChecked] = React.useState(false)
+  const allTodo = useSelector(state => state.todo.allTodo)
 
   const toggleMenu = () => {
     setMenuVisible(!menuVisible)
@@ -94,7 +94,7 @@ export default function DetailScreen({ navigation }) {
                 category="c1"
                 style={{ fontSize: 15, color: '#e5e5e5' }}
               >
-                23 Tasks
+                {JSON.stringify(allTodo.length)} Tasks
               </Text>
             </View>
           </View>
@@ -104,30 +104,9 @@ export default function DetailScreen({ navigation }) {
                 category="s1"
                 style={{color: 'gray'}}
               >
-                On Progress
+                List of todos
               </Text>
-              <View style={styles.card}>
-                <View>
-                  <Text
-                    category="s1"
-                    style={{ fontSize: 15, marginBottom: 3 }}
-                  >
-                    Membuat aplikasi todo
-                  </Text>
-                  <Text
-                    category="c1"
-                    style={{ fontSize: 13, color: 'gray' }}
-                  >
-                    2021/07/19
-                  </Text>
-                </View>
-                <View>
-                  <CheckBox
-                    checked={checked}
-                    onChange={nextChecked => setChecked(nextChecked)}>
-                  </CheckBox>
-                </View>
-              </View>
+              <CardDetail allTodo={allTodo}/>
             </View>
           </ScrollView>
         </View>
@@ -141,7 +120,6 @@ export default function DetailScreen({ navigation }) {
           />
         </TouchableOpacity>
     </>
-
   )
 }
 
