@@ -6,3 +6,11 @@ Preview my app >> [here](https://drive.google.com/file/d/1otu0sTGlT7XLJT51D7V2Xz
 	> https://expo.io/@trisnaadetia/todo_app
 - Scan barcode using your phone and make sure your phone already login and install **Expo Go**
 - Enjoy demo
+
+## Techstack
+
+- React Native
+- Expo
+- Redux
+- Axios
+- UI Kitten
