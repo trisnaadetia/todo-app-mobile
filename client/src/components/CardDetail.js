@@ -24,25 +24,60 @@ export default function CardDetail({allTodo}) {
                 >
                   {x.title}
                 </Text>
+            
+                {
+                  x.note === 'urgent' ? (
+                    <Text
+                      category="s1"
+                      style={{ fontSize: 13, marginBottom: 3, color: 'red' }}
+                    >
+                      {x.note}
+                    </Text>
+                  ) : (
+                    <Text
+                      category="s1"
+                      style={{ fontSize: 13, marginBottom: 3, color: 'blue' }}
+                    >
+                      {x.note}
+                    </Text>
+                  )
+                }
+
                 <Text
                   category="c1"
-                  style={{ fontSize: 13, color: 'gray' }}
+                  style={{ fontSize: 13, marginBottom: 3, color: 'gray' }}
                 >
                   {x.deadline}
                 </Text>
-                <Text
-                  category="s1"
-                  style={{ fontSize: 10, color: 'gray' }}
-                >
-                  {x.status}
-                </Text>
+                
+                {
+                  x.status === 'uncompleted' ? (
+                    <Text
+                      category="s1"
+                      style={{ fontSize: 10, color: 'orange' }}
+                    >
+                      {x.status}
+                    </Text>
+                  ) : (
+                    <Text
+                      category="s1"
+                      style={{ fontSize: 10, color: 'green' }}
+                    >
+                      {x.status}
+                    </Text>
+                  )
+                }
               </View>
-              <View>
-                <CheckBox
-                  checked={checked}
-                  onChange={nextChecked => setChecked(nextChecked)}>
-                </CheckBox>
-              </View>
+              {
+                x.status !== 'completed' && (
+                  <View>
+                    <CheckBox
+                      checked={checked}
+                      onChange={nextChecked => setChecked(nextChecked)}>
+                    </CheckBox>
+                  </View>
+                )
+              }
             </View>
           )
         })

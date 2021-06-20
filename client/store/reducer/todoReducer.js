@@ -6,7 +6,8 @@ import {
   SET_TODO_HOME,
   SET_TODO_STUDY,
   SET_TODO_MUSIC,
-  SET_TODO_TRAVEL
+  SET_TODO_TRAVEL,
+  SET_POST_TODO
 } from '../constanta'
 import {listTodo} from '../initialStateTodo'
 
@@ -26,6 +27,8 @@ function todoReducer(state = initialState, action) {
   switch(type) {
     case SET_LIST_TODO:
       return {...state, allTodo: payload }
+    case SET_POST_TODO:
+      return {...state, allTodo: [...state.allTodo, payload] }
     case SET_TODO_WORK:
       return {...state, todoWork: payload }
     case SET_TODO_TRAVEL:

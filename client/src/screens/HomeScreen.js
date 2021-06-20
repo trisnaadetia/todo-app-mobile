@@ -62,6 +62,7 @@ export default function HomeScreen({ navigation }) {
     })
   }
 
+
   return (
     <>
       <SafeAreaView style={{ flex: 0, backgroundColor: 'white' }}/>

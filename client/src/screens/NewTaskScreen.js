@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { 
   StyleSheet, 
   View,
@@ -14,19 +14,122 @@ import {
   Text,
   Button,
   Select,
-  SelectItem
+  SelectItem,
+  IndexPath
 } from '@ui-kitten/components'
 import Textarea from 'react-native-textarea'
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { TextInput } from 'react-native-gesture-handler'
+import { useSelector, useDispatch } from 'react-redux'
+import { setPostTodo } from '../../store/action/actionTodo'
+import Toast from 'react-native-toast-message'
 
 export default function NewTaskScreen({ navigation }) {
+  const dispatch = useDispatch()
   const [date, setDate] = useState(new Date())
-  const [selectedIndex, setSelectedIndex] = useState()
+  const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
+  const category = useSelector(state => state.category.category)
+  const allTodo = useSelector(state => state.todo.allTodo)
+  const [selectValue, setSelectValue] = useState([])
+  const [inputTodo, setInputTodo] = useState({
+    id: 1,
+    title: '',
+    deadline: '',
+    note: '',
+    category: '',
+    status: 'uncompleted'
+  })
+  const displayValue = selectValue[selectedIndex.row]
+  
+  useEffect(() => {
+    filterCategory()
+  },[allTodo])
+
+  useEffect(() => {
+    setInputTodo({...inputTodo, category: displayValue})
+  },[displayValue])
+
+  useEffect(() => {
+    setInputTodo({...inputTodo, deadline: conversiDate(date)})
+  },[date])
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date
     setDate(currentDate)
+  }
+
+  const conversiDate = (date) => {
+    const newDate = date.toISOString().split('T')[0]
+    return newDate
+  }
+
+  const renderOption = (id, title) => (
+    <SelectItem key={id} title={title}/>
+  )
+
+  const filterCategory = () => {
+    const newCategory = [...category]
+    let tmp = []
+    newCategory.forEach(x => {
+      tmp.push(x.name)
+    })
+    tmp.length && setSelectValue(tmp)
+  }
+
+  const submitInputTodo = () => {
+    let tmp = []
+    for(let key in inputTodo) {
+      if(!inputTodo[key]) {
+        tmp.push('input must be required')
+      } 
+    } 
+
+    if(tmp.length) {
+      errorToast()
+    } else {
+      const payload = {
+        id: allTodo.length + 1,
+        title: inputTodo.title,
+        deadline: inputTodo.deadline,
+        note: inputTodo.note,
+        category: inputTodo.category,
+        status: inputTodo.status
+      }
+      dispatch(setPostTodo(payload))
+      successToast()
+    }
+  }
+
+  const successToast = () => {
+    Toast.show({
+      type: 'success',
+      position: 'bottom',
+      text1: 'Good job',
+      text2: 'Your todo has been updated 👋',
+      visibilityTime: 50,
+      autoHide: true,
+      topOffset: 50,
+      bottomOffset: 50,
+      onShow: () => {},
+      onHide: () => {navigation.navigate('Home')},
+      onPress: () => {}
+    })    
+  }
+
+  const errorToast = () => {
+    Toast.show({
+      type: 'error',
+      position: 'bottom',
+      text1: 'Please check your input',
+      text2: 'All input must be required ❗',
+      visibilityTime: 1000,
+      autoHide: true,
+      topOffset: 50,
+      bottomOffset: 50,
+      onShow: () => {},
+      onHide: () => {},
+      onPress: () => {}
+    })    
   }
 
   return (
@@ -58,6 +161,8 @@ export default function NewTaskScreen({ navigation }) {
             style={styles.textarea}
             maxLength={120}
             underlineColorAndroid={'transparent'}
+            onChangeText={(text) => setInputTodo({...inputTodo, title: text})}
+            defaultValue={inputTodo.title}
           />
           <View style={{marginTop: 30}}>
             <View style={styles.containerInnerForm}>
@@ -69,7 +174,7 @@ export default function NewTaskScreen({ navigation }) {
               <DateTimePicker
                 testID="dateTimePicker"
                 value={date}
-                mode="datetime"
+                mode="date"
                 display="default"
                 onChange={onChange}
                 is24Hour={true}
@@ -86,6 +191,7 @@ export default function NewTaskScreen({ navigation }) {
               <TextInput
                 placeholder="Add note"
                 style={{fontSize: 20, marginHorizontal: 10}}
+                onChangeText={(text) => setInputTodo({...inputTodo, note: text})}
               />
             </View>
             <View style={styles.containerInnerForm}>
@@ -96,16 +202,17 @@ export default function NewTaskScreen({ navigation }) {
               />
               <Select
                 style={{width: 320, marginHorizontal: 10}}
+                placeholder='Default'
+                value={displayValue}
                 selectedIndex={selectedIndex}
-                placeholder="Category"
                 onSelect={index => setSelectedIndex(index)}
               >
-                <SelectItem title='Work'/>
+                {selectValue.map((x, idx) => renderOption(idx, x))}
               </Select>
             </View>
           </View>
         </View>
-        <Button>
+        <Button onPress={() => submitInputTodo()}>
           <Text
             style={{color: 'white', fontSize: 18}}
           >
@@ -122,6 +229,7 @@ export default function NewTaskScreen({ navigation }) {
           name='close'
         />
       </TouchableOpacity>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       </KeyboardAvoidingView>
     </>
   )

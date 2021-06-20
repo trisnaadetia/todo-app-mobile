@@ -1,6 +1,7 @@
 export const SET_CATEGORY = 'category/setCategory'
 
 export const SET_LIST_TODO = 'listTodo/setListTodo'
+export const SET_POST_TODO = 'postTodo/setPostTodo'
 export const SET_TODO_WORK = 'todoWork/setTodoWork'
 export const SET_TODO_TRAVEL = 'todoWork/setTodoTravel'
 export const SET_TODO_MUSIC = 'todoWork/setTodoMusic'
