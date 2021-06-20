@@ -18,6 +18,7 @@ import {
 } from '@ui-kitten/components'
 import { useSelector } from 'react-redux'
 import CardDetail from '../components/CardDetail'
+import Toast from 'react-native-toast-message'
 
 const BackIcon = (props) => (
   <Icon {...props} name='arrow-back' fill="white"/>
@@ -159,6 +160,7 @@ export default function DetailScreen({ navigation, route }) {
             name='plus-outline'
           />
         </TouchableOpacity>
+        <Toast ref={(ref) => Toast.setRef(ref)} />
     </>
   )
 }

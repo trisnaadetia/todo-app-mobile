@@ -7,7 +7,7 @@ import {
   SET_TODO_SPORT,
   SET_TODO_STUDY,
   SET_TODO_TRAVEL,
-  SET_POST_TODO
+  SET_POST_TODO,SET_UPDATE_TODO
 } from '../constanta'
 
 export function setListTodo(payload) {
@@ -44,6 +44,10 @@ export function setFilterTodoShopping(payload) {
 
 export function setPostTodo(payload) {
   return { type: SET_POST_TODO, payload }
+}
+
+export function setUpdateTodo(payload) {
+  return { type: SET_UPDATE_TODO, payload }
 }
 
 
