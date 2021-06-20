@@ -10,6 +10,7 @@ import store from './store/index'
 import HomeScreen from './src/screens/HomeScreen'
 import NewTaskScreen from './src/screens/NewTaskScreen'
 import DetailScreen from './src/screens/DetailScreen'
+import ProfileScreen from './src/screens/ProfileScreen'
 
 const Stack = createStackNavigator()
 
@@ -28,6 +29,7 @@ export default function App() {
               <Stack.Screen name="Home" component={HomeScreen} />
               <Stack.Screen name="NewTask" component={NewTaskScreen} />
               <Stack.Screen name="Detail" component={DetailScreen} />
+              <Stack.Screen name="Profile" component={ProfileScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </ApplicationProvider>

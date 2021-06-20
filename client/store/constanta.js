@@ -1,5 +1,7 @@
 export const SET_CATEGORY = 'category/setCategory'
 
+export const SET_USER_PROFILE = 'userProfile/setUserProfile'
+
 export const SET_LIST_TODO = 'listTodo/setListTodo'
 export const SET_POST_TODO = 'postTodo/setPostTodo'
 export const SET_UPDATE_TODO = 'updateTodo/setUpdateTodo'

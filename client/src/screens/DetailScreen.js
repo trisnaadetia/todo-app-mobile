@@ -11,35 +11,19 @@ import {
 import { 
   Icon,
   Text,
-  MenuItem, 
-  OverflowMenu, 
-  TopNavigation, 
-  TopNavigationAction,
 } from '@ui-kitten/components'
 import { useSelector } from 'react-redux'
 import CardDetail from '../components/CardDetail'
 import Toast from 'react-native-toast-message'
-
-const BackIcon = (props) => (
-  <Icon {...props} name='arrow-back' fill="white"/>
-)
-
-const MenuIcon = (props) => (
-  <Icon {...props} name='more-vertical' fill="white"/>
-)
-
-const InfoIcon = (props) => (
-  <Icon {...props} name='info'/>
-)
-
+import TopNavigation from '../components/TopNavigation'
 
 export default function DetailScreen({ navigation, route }) {
   const { name } = route.params
-  const [menuVisible, setMenuVisible] = useState(false)
   const [iconName, setIconName] = useState('briefcase-outline')
   const [filterTodo, setFilterTodo] = useState([])
   const category = useSelector(state => state.category.category)
   const allTodo = useSelector(state => state.todo.allTodo)
+  const namePage = 'Detail'
 
   useEffect(() => {
     filterIcon()
@@ -67,33 +51,6 @@ export default function DetailScreen({ navigation, route }) {
     })
   }
 
-  const toggleMenu = () => {
-    setMenuVisible(!menuVisible)
-  }
-
-  const renderMenuAction = () => (
-    <TopNavigationAction icon={MenuIcon} onPress={toggleMenu}/>
-  )
-
-  const renderRightActions = () => (
-    <>
-      <TopNavigationAction/>
-      <OverflowMenu
-        anchor={renderMenuAction}
-        visible={menuVisible}
-        onBackdropPress={toggleMenu}
-      >
-        <MenuItem accessoryLeft={InfoIcon} title='Profile'/>
-      </OverflowMenu>
-    </>
-  )
-
-  const renderBackAction = () => (
-    <TopNavigationAction icon={BackIcon}
-      onPress={() => navigation.navigate('Home')}
-    />
-  )
-
   const filterIcon = () => {
     const newCategory = [...category]
 
@@ -110,11 +67,7 @@ export default function DetailScreen({ navigation, route }) {
         barStyle="light-content"
       />
       <SafeAreaView style={{ flex: 0, backgroundColor: '#5784fc' }}/>
-        <TopNavigation
-          accessoryLeft={renderBackAction}
-          accessoryRight={renderRightActions}
-          style={{backgroundColor: '#5784fc'}}
-        />
+        <TopNavigation navigation={navigation} namePage={namePage}/>
         <View style={styles.container}>
           <View style={{marginHorizontal: 30, marginTop: 30}}>
             <TouchableOpacity style={styles.category}>
