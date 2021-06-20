@@ -36,7 +36,7 @@ export default function CardDetail({allTodo}) {
   const successToast = () => {
     Toast.show({
       type: 'success',
-      position: 'bottom',
+      position: 'top',
       text1: 'Good job',
       text2: 'Your todo has been updated 👋',
       visibilityTime: 1000,

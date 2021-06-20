@@ -20,10 +20,19 @@ export default function UserProfile({navigation}) {
   const dispatch = useDispatch()
   const namePage = 'Profile'
   const userProfile = useSelector(state => state.user.userProfile)
+  const loading = useSelector(state => state.user.loadingUser)
 
   useEffect(() => {
     dispatch(fetchUserProfile())
   },[])
+
+  if(loading) {
+    return (
+      <View style={{flex: 1}}>
+        <Text>Loading..</Text>
+      </View>
+    )
+  }
 
   return (
     <>
